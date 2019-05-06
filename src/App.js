@@ -19,10 +19,15 @@ import ProgressPage from 'pages/ProgressPage';
 import TablePage from 'pages/TablePage';
 import TypographyPage from 'pages/TypographyPage';
 import WidgetPage from 'pages/WidgetPage';
+import SearchPage from 'pages/SearchPage';
 import React from 'react';
 import componentQueries from 'react-component-queries';
-import { BrowserRouter, Redirect, Switch } from 'react-router-dom';
+import { Router, Redirect, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import './styles/reduction.scss';
+import StockPage from './pages/StockPage';
+
+const history = createBrowserHistory();
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -31,7 +36,7 @@ const getBasename = () => {
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter basename={getBasename()}>
+      <Router history={history} basename={getBasename()}>
         <GAListener>
           <Switch>
             <LayoutRoute
@@ -39,7 +44,7 @@ class App extends React.Component {
               path="/login"
               layout={EmptyLayout}
               component={props => (
-                <AuthPage {...props} authState={STATE_LOGIN} />
+                <AuthPage {...props} authState={STATE_LOGIN}/>
               )}
             />
             <LayoutRoute
@@ -47,7 +52,7 @@ class App extends React.Component {
               path="/signup"
               layout={EmptyLayout}
               component={props => (
-                <AuthPage {...props} authState={STATE_SIGNUP} />
+                <AuthPage {...props} authState={STATE_SIGNUP}/>
               )}
             />
             <LayoutRoute
@@ -152,10 +157,22 @@ class App extends React.Component {
               layout={MainLayout}
               component={AuthPage}
             />
-            <Redirect to="/" />
+            <LayoutRoute
+              exact
+              path="/search"
+              layout={MainLayout}
+              component={SearchPage}
+            />
+            <LayoutRoute
+              exact
+              path="/stock/:stockquote"
+              layout={MainLayout}
+              component={StockPage}
+            />
+            <Redirect to="/"/>
           </Switch>
         </GAListener>
-      </BrowserRouter>
+      </Router>
     );
   }
 }
