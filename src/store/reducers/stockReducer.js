@@ -4,6 +4,7 @@
 
 const initialState = {
   isLoaded: false,
+  isLoading: true,
   stocks: [],
 };
 
@@ -15,8 +16,16 @@ export const LOAD_STOCK_METADATA_FULFILLED = '[STOCK] LOAD_STOCK_METADATA_FULFIL
 
 export default function stockReducer(state = initialState, action) {
   switch (action.type) {
+    case LOAD_STOCK: {
+      return {
+        isLoaded: false,
+        isLoading: true,
+      };
+    }
     case LOAD_STOCK_FULFILLED: {
       return {
+        isLoaded: true,
+        isLoading: false,
         stocks: action.payload.map((symbol) => ({ symbol, isLoaded: false })),
       };
     }
@@ -36,6 +45,8 @@ export default function stockReducer(state = initialState, action) {
         stocks,
       };
     }
+    default:
+      return state;
   }
-  return state;
+
 }

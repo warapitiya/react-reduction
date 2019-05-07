@@ -3,7 +3,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { DropdownItem, DropdownMenu, DropdownToggle, Table, UncontrolledButtonDropdown } from 'reactstrap';
+import { Col, DropdownItem, DropdownMenu, DropdownToggle, Table, UncontrolledButtonDropdown } from 'reactstrap';
 import { connect } from 'react-redux';
 import { loadStockPrice } from '../store/actions/price.actions';
 
@@ -20,13 +20,17 @@ function StockPage({ onStockPeriodChange, match, prices }) {
     onStockPeriodChange(stockquote, timeRange);
   }, [timeRange]);
 
+  /**
+   * Handle select on change
+   * @param val
+   */
   const handleSelect = (val) => {
     setTimeRange(val);
   };
 
   return (<div className="container">
     <div className="row">
-      <div className="col-md-3">
+      <Col md={3} sm={6} xs={12} className="mb-3">
         <label>Time Range:</label>
         <UncontrolledButtonDropdown>
           <DropdownToggle
@@ -43,8 +47,8 @@ function StockPage({ onStockPeriodChange, match, prices }) {
             })}
           </DropdownMenu>
         </UncontrolledButtonDropdown>
-      </div>
-      <div className="col-md-9">
+      </Col>
+      <Col md={9} sm={6} xs={12} className="mb-3">
         <Table {...{ 'default': true }}>
           <thead>
           <tr>
@@ -63,7 +67,7 @@ function StockPage({ onStockPeriodChange, match, prices }) {
           })}
           </tbody>
         </Table>
-      </div>
+      </Col>
     </div>
   </div>);
 }

@@ -10,6 +10,10 @@ import StockMetaData from '../components/StockMetaData';
 
 function SearchPage({ stocks, history }) {
 
+  /**
+   * handle click event
+   * @param symbol
+   */
   const handleClick = (symbol) => {
     history.push(`/stock/${symbol}`);
   };
@@ -42,6 +46,5 @@ function SearchPage({ stocks, history }) {
 function mapStateToProps(state) {
   return { stocks: state.stock.stocks };
 }
-
 
 export default connect(mapStateToProps, null)(SearchPage);
